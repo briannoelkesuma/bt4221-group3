@@ -1,0 +1,5 @@
+pyspark>=3.0.0
+langgraph
+langchain-openai
+pydantic
+python-dotenv
