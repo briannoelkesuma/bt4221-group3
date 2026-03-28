@@ -20,7 +20,7 @@ def coordinator_node(state: AgentState):
     
     # Check if OPENAI_API_KEY is available (to fall back to dummy mock if running without key)
     if os.getenv("OPENAI_API_KEY"):
-        llm = ChatOpenAI(model="gpt-4o", temperature=0)
+        llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
         structured_llm = llm.with_structured_output(CoordinatorDecision)
         decision = structured_llm.invoke([
             SystemMessage(content=sys_prompt),

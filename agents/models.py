@@ -3,23 +3,42 @@ from pydantic import BaseModel, Field
 
 # --- Pydantic Models for Agent Outputs ---
 
+class ImputationStrategy(BaseModel):
+    model_config = {"extra": "forbid"}
+    strategy: str
+    columns: List[str]
+
+class EncodingStrategy(BaseModel):
+    model_config = {"extra": "forbid"}
+    strategy: str
+    columns: List[str]
+
+class ScalingStrategy(BaseModel):
+    model_config = {"extra": "forbid"}
+    strategy: str
+    columns: List[str]
+
 class FeatureEngineeringPlan(BaseModel):
-    numerical_imputation: Dict[str, Any] = Field(description="Imputation strategy for numerical columns")
-    categorical_encoding: Dict[str, Any] = Field(description="Encoding strategy for categorical columns")
-    scaling: Dict[str, Any] = Field(description="Scaling strategy (e.g., StandardScaler)")
+    model_config = {"extra": "forbid"}
+    numerical_imputation: ImputationStrategy = Field(description="Imputation strategy for numerical columns")
+    categorical_encoding: EncodingStrategy = Field(description="Encoding strategy for categorical columns")
+    scaling: ScalingStrategy = Field(description="Scaling strategy (e.g., StandardScaler)")
     features_to_drop: List[str] = Field(description="List of columns to drop")
 
 class DriftReport(BaseModel):
+    model_config = {"extra": "forbid"}
     drift_detected: bool = Field(description="True if significant data drift is detected")
     drifted_features: List[str] = Field(description="List of features that drifted")
     drift_explanation: str = Field(description="Reasoning for drift detection")
 
 class ValidationReport(BaseModel):
+    model_config = {"extra": "forbid"}
     model_health_status: str = Field(description="e.g., 'Degraded' or 'Healthy'")
     requires_retraining: bool = Field(description="True if model requires retraining")
     evaluation_summary: str = Field(description="Reasoning based on evaluation metrics")
 
 class CoordinatorDecision(BaseModel):
+    model_config = {"extra": "forbid"}
     next_node: str = Field(description="The next node to route to: 'feature_engineering', 'data_engineer', 'validator', or 'end'")
     reasoning: str = Field(description="Why this node was chosen")
 

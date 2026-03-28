@@ -15,7 +15,7 @@ def validator_node(state: AgentState):
     prompt = f"Evaluation Metrics on new data:\n{json.dumps(state['evaluation_metrics'], indent=2)}"
     
     if os.getenv("OPENAI_API_KEY"):
-        llm = ChatOpenAI(model="gpt-4o", temperature=0)
+        llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
         structured_llm = llm.with_structured_output(ValidationReport)
         validation = structured_llm.invoke([SystemMessage(content=sys_prompt), HumanMessage(content=prompt)])
     else:

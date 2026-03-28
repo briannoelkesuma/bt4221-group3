@@ -15,7 +15,7 @@ def data_engineer_node(state: AgentState):
     prompt = f"Dataset Stats (Compare Jan to Feb):\n{json.dumps(state['dataset_stats'], indent=2)}"
     
     if os.getenv("OPENAI_API_KEY"):
-        llm = ChatOpenAI(model="gpt-4o", temperature=0)
+        llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
         structured_llm = llm.with_structured_output(DriftReport)
         report = structured_llm.invoke([SystemMessage(content=sys_prompt), HumanMessage(content=prompt)])
     else:
